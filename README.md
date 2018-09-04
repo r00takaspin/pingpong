@@ -19,5 +19,5 @@ cd -
 git clone https://github.com/r00takaspin/pingpong
 cd pingpong
 dep ensure -v
-PORT=8080 go build && go run pingpong.go
+export PORT=8080; go build && go run pingpong.go
 ```

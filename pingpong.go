@@ -23,16 +23,18 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response_text := ""
+	responseText := ""
+	userId :=request.Session.UserId
 
 	if request.RequestData.Command == "" {
-		response_text = "Я буду повторять все ваши фразы, скажите что-нибудь"
+		log.Printf("Received empty message from %s", userId)
+		responseText = "Я буду повторять все ваши фразы, скажите что-нибудь"
 	} else {
-		response_text = request.RequestData.Command
+		responseText = request.RequestData.Command
 	}
 
 	response := alice.Response{
-		ResponseData: alice.ResponseData{Text: response_text},
+		ResponseData: alice.ResponseData{Text: responseText},
 		Session: request.Session,
 		Version: request.Version,
 		EndSession: true,
@@ -41,10 +43,13 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	res1B, _ := json.Marshal(response)
 
 	w.Write([]byte(res1B))
+
+	log.Printf("Sent echo response to: %s", userId)
 }
 
 func main() {
 	port := os.Getenv("PORT")
+	log.Printf("Starting server on %s port", port)
 	http.HandleFunc("/", handler)
 	log.Fatal(http.ListenAndServe(":" + string(port), nil))
 }
