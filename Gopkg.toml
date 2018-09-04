@@ -25,6 +25,11 @@
 #   unused-packages = true
 
 
+[metadata.heroku]
+  root-package = "github.com/r00takaspin/pingpong"
+  go-version = "1.10.3"
+  install = [ "./..." ]
+
 [prune]
   go-tests = true
   unused-packages = true
