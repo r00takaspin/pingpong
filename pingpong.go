@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"github.com/r00takaspin/pingpong/alice"
+	"os"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -35,6 +36,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	port := os.Getenv("PORT")
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":" + string(port), nil))
 }
