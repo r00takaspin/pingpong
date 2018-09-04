@@ -23,8 +23,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	response_text := ""
+
+	if request.RequestData.Command == "" {
+		response_text = "Я буду повторять все ваши фразы, скажите что-нибудь"
+	} else {
+		response_text = request.RequestData.Command
+	}
+
 	response := alice.Response{
-		ResponseData: alice.ResponseData{Text: request.RequestData.Command},
+		ResponseData: alice.ResponseData{Text: response_text},
 		Session: request.Session,
 		Version: request.Version,
 		EndSession: true,
